@@ -1,5 +1,3 @@
-// We will be using two scatter plots
-
 // Scatter 1:
 
 // create axes and scales (x-axis will be field goal percentage, y-axis will be opponent field goal percentage)
@@ -8,7 +6,7 @@
 
 // draw in circles (points) each of which will represent a team
 
-//Scatter 2:
+// Scatter 2:
 
 // create axes and scales (x-axis will be average points away, y-axis will be average assists away)
 
@@ -21,58 +19,45 @@
 
 // Set up margins
 width = 500;
-height = 500
+height = 500;
+
 // Load data
-let data = d3.csv("nba_1947_2022/Average FG.csv", d =>{
+let data1 = d3.csv("data/Average FG.csv", d => {
   d.avg_fg_percent = +d.avg_fg_percent
   d.avg_opp_fg_percent = +d.avg_opp_fg_percent
   return d
-}).then(data => {
-  console.log(data)
-
-  data = data.sort((a, b) => a.avg_fg_percent - b.avg_fg_percent);
-
-  Draw(data)
+}).then(data1 => {
+  data1 = data1.sort((a, b) => a.avg_fg_percent - b.avg_fg_percent);
+  draw(data1)
 })
 
-function Draw(data) {
-  // Min and Max values for incomeScale
-  var max_fg = d3.max(data, function (d) {
+function draw(data1){
+  // Min and Max values for avg_fg_percent
+  var max_fg = d3.max(data1, function (d) {
     return d.avg_fg_percent
   });
-  var min_fg = d3.min(data, function (d) {
+  var min_fg = d3.min(data1, function (d) {
     return d.avg_fg_percent
   });
-  // Min and Max values for lifeExpectancyScale
-  var max_opp_fg = d3.max(data, function (d) {
+  // Min and Max values for avg_opp_fg_percent
+  var max_opp_fg = d3.max(data1, function (d) {
     return d.avg_opp_fg_percent
   });
-  var min_opp_fg = d3.min(data, function (d) {
+  var min_opp_fg = d3.min(data1, function (d) {
     return d.avg_opp_fg_percent
   });
 
   let padding = 100;
-  // incomeScale
   let fgScale = d3.scaleLinear().domain([0.44, max_fg]).range([padding, width - padding])
-  // console.log(incomeScale(5000))
-
   let oppfgScale = d3.scaleLinear().domain([0.44, max_opp_fg]).range([height - padding, padding])
-  // console.log(lifeExpectancyScale(68))
 
-  // let popScale = d3.scaleLinear().domain([min_pop, max_pop]).range([4, 30])
-
-  // let color = d3.scaleOrdinal(d3.schemeCategory10);
-  // let region = [...new Set(data.map(c => c.team))];
-  // color.domain(d.team)
-
-
-  svg = d3.select("#chart-area")
+  svg = d3.select("#col1")
     .append("svg")
     .attr("height", height)
     .attr("width", width)
 
   let circles = svg.selectAll("circle")
-    .data(data)
+    .data(data1)
     .enter().append("circle")
     .attr("cx", function (d) {
       return fgScale(d.avg_fg_percent)

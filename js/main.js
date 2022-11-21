@@ -12,7 +12,7 @@
 // loadAverage();
 
 // function loadAverage(){
-//   d3.csv("nba_1947_2022/Average FG.csv", row =>{
+//   d3.csv("data/Average FG.csv", row =>{
 //     row.avg_fg_percent = +row.avg_fg_percent
 //     row.avg_opp_fg_percent = +row.avg_opp_fg_percent
 //     return row
@@ -23,7 +23,7 @@
 //   })
 // }
 // function loadTeam(){
-//   d3.csv("nba_1947_2022/Totals.csv", row => {
+//   d3.csv("data/Totals.csv", row => {
 //     row.ast = +row.ast
 //     row.blk = +row.blk
 //     row.drb = +row.drb
